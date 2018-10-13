@@ -14,7 +14,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-
+    @IBAction func pressedSkipSong(_ sender: Any) {
+        appDelegate.skipToNext(appDelegate.appRemote)
+    
+    }
+    
 }
 

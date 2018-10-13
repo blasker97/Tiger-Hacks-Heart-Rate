@@ -10,6 +10,7 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate, SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate {
+    
     var window: UIWindow?
     
     let SpotifyClientID = "45498c6f848a4c12ae3281851abf67af"
@@ -65,21 +66,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     }
     
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
-        print("connected")
-        
         self.appRemote.playerAPI?.delegate = self
         self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
             if let error = error {
                 debugPrint(error.localizedDescription)
             }
         })
+    }
         
-        // Want to play a new track?
-        // self.appRemote.playerAPI?.play("spotify:track:13WO20hoD72L0J13WTQWlT", callback: { (result, error) in
-        //     if let error = error {
-        //         print(error.localizedDescription)
-        //     }
-        // })
+    func skipToNext(_ appRemote: SPTAppRemote) {
+        print("skip")
+        
+         self.appRemote.playerAPI?.skip(toNext: { (result, error) in
+             if let error = error {
+                 print(error.localizedDescription)
+             }
+         })
     }
     
     func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
