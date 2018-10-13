@@ -139,18 +139,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         if self.sessionManager.session != nil{
             let at = self.sessionManager.session!.accessToken
             let urlPath: String = "https://api.spotify.com/v1/me/playlists"
-            let up = URL(string: urlPath)
-            var req = URLRequest(url: up!)
+            guard let up = URL(string: urlPath) else {
+                return
+            }
+            var req = URLRequest(url: up)
             req.addValue("Bearer " + at, forHTTPHeaderField: "Authorization")
-            let ftc = URLSession()
-            ftc.dataTask(with: req){ data, response, error in
+            let config = URLSessionConfiguration.default
+            let ftc = URLSession(configuration: config)
+            let task = ftc.dataTask(with: req){ data, response, error in
                 if error != nil{
                     print("error=\(error)")
                 }
                 else{
                     print("it works")
+                    print(data!)
                 }
             }
+            task.resume()
+            
         }
     }
 }
