@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     @IBAction func getSongData(_ sender: Any) {
         appDelegate.getPlaylist(dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (playlistData, error) in
             if let error = error {
+                print(error)
                 return
             }
             guard let playlistData = playlistData else {
