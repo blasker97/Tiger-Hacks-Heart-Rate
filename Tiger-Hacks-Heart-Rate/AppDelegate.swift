@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     let SpotifyClientID = "45498c6f848a4c12ae3281851abf67af"
     let SpotifyRedirectURL = URL(string: "spotify-Tiger-Hacks-Heart-Rate://spotify-login-callback")!
     
-    var pagingobject: paging?
+    var pagingobject: Paging?
     
     
     lazy var configuration = SPTConfiguration(

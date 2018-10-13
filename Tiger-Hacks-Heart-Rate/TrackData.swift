@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+func trackBPM(_ playlist : PlaylistObject) -> [(String, Int)]{
+    
+    var playlistTrackData = [("",0)]
+    
+    return playlistTrackData
+    
+}
