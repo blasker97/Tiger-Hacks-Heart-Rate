@@ -22,5 +22,8 @@ class ViewController: UIViewController {
     
     }
     
+    @IBAction func getSongData(_ sender: Any) {
+        appDelegate.getPlaylist()
+    }
 }
 

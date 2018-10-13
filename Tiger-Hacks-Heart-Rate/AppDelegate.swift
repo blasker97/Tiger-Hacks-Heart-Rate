@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let requestedScopes: SPTScope = [.appRemoteControl]
+        let requestedScopes: SPTScope = [.appRemoteControl, .playlistReadCollaborative]
         self.sessionManager.initiateSession(with: requestedScopes, options: .default)
         
         return true
@@ -133,5 +133,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func getPlaylist() {
+        if self.sessionManager.session != nil{
+            let at = self.sessionManager.session!.accessToken
+            let urlPath: String = "https://api.spotify.com/v1/me/playlists"
+            let up = URL(string: urlPath)
+            var req = URLRequest(url: up!)
+            req.addValue("Bearer " + at, forHTTPHeaderField: "Authorization")
+            let ftc = URLSession()
+            ftc.dataTask(with: req){ data, response, error in
+                if error != nil{
+                    print("error=\(error)")
+                }
+                else{
+                    print("it works")
+                }
+            }
+        }
     }
 }
