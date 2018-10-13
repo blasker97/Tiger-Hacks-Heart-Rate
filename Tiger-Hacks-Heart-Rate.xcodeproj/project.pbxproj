@@ -14,6 +14,7 @@
 		4E6BDDB4217251C800FEB7DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E6BDDB2217251C800FEB7DE /* LaunchScreen.storyboard */; };
 		4E6BDDBF217251C800FEB7DE /* Tiger_Hacks_Heart_RateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BDDBE217251C800FEB7DE /* Tiger_Hacks_Heart_RateTests.swift */; };
 		4E6BDDCA217251C800FEB7DE /* Tiger_Hacks_Heart_RateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BDDC9217251C800FEB7DE /* Tiger_Hacks_Heart_RateUITests.swift */; };
+		4E6BDDD8217252A300FEB7DE /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6BDDD7217252A300FEB7DE /* SpotifyiOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		4E6BDDC5217251C800FEB7DE /* Tiger-Hacks-Heart-RateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tiger-Hacks-Heart-RateUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E6BDDC9217251C800FEB7DE /* Tiger_Hacks_Heart_RateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiger_Hacks_Heart_RateUITests.swift; sourceTree = "<group>"; };
 		4E6BDDCB217251C800FEB7DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E6BDDD7217252A300FEB7DE /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = "../../../Downloads/ios-sdk-1.0.0/SpotifyiOS.framework"; sourceTree = "<group>"; };
+		4E6BDDD9217253BF00FEB7DE /* Tiger-Hacks-Heart-Rate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tiger-Hacks-Heart-Rate-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E6BDDD8217252A300FEB7DE /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,12 +101,14 @@
 		4E6BDDA8217251C700FEB7DE /* Tiger-Hacks-Heart-Rate */ = {
 			isa = PBXGroup;
 			children = (
+				4E6BDDD7217252A300FEB7DE /* SpotifyiOS.framework */,
 				4E6BDDA9217251C700FEB7DE /* AppDelegate.swift */,
 				4E6BDDAB217251C700FEB7DE /* ViewController.swift */,
 				4E6BDDAD217251C700FEB7DE /* Main.storyboard */,
 				4E6BDDB0217251C800FEB7DE /* Assets.xcassets */,
 				4E6BDDB2217251C800FEB7DE /* LaunchScreen.storyboard */,
 				4E6BDDB5217251C800FEB7DE /* Info.plist */,
+				4E6BDDD9217253BF00FEB7DE /* Tiger-Hacks-Heart-Rate-Bridging-Header.h */,
 			);
 			path = "Tiger-Hacks-Heart-Rate";
 			sourceTree = "<group>";
@@ -439,8 +445,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.Tiger-Hacks-Heart-Rate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Tiger-Hacks-Heart-Rate/Tiger-Hacks-Heart-Rate-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -457,8 +465,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.Tiger-Hacks-Heart-Rate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Tiger-Hacks-Heart-Rate/Tiger-Hacks-Heart-Rate-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
