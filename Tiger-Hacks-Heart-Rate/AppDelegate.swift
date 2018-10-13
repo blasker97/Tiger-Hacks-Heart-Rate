@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     let SpotifyClientID = "45498c6f848a4c12ae3281851abf67af"
     let SpotifyRedirectURL = URL(string: "spotify-Tiger-Hacks-Heart-Rate://spotify-login-callback")!
     
+    var pagingobject: paging?
+    
+    
     lazy var configuration = SPTConfiguration(
         clientID: SpotifyClientID,
         redirectURL: SpotifyRedirectURL
@@ -93,18 +96,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     }
     
     func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
-        print("player state changed")
-        print("isPaused", playerState.isPaused)
-        print("track.uri", playerState.track.uri)
-        print("track.name", playerState.track.name)
-        print("track.imageIdentifier", playerState.track.imageIdentifier)
-        print("track.artist.name", playerState.track.artist.name)
-        print("track.album.name", playerState.track.album.name)
-        print("track.isSaved", playerState.track.isSaved)
-        print("playbackSpeed", playerState.playbackSpeed)
-        print("playbackOptions.isShuffling", playerState.playbackOptions.isShuffling)
-        print("playbackOptions.repeatMode", playerState.playbackOptions.repeatMode.hashValue)
-        print("playbackPosition", playerState.playbackPosition)
+//        print("player state changed")
+//        print("isPaused", playerState.isPaused)
+//        print("track.uri", playerState.track.uri)
+//        print("track.name", playerState.track.name)
+//        print("track.imageIdentifier", playerState.track.imageIdentifier)
+//        print("track.artist.name", playerState.track.artist.name)
+//        print("track.album.name", playerState.track.album.name)
+//        print("track.isSaved", playerState.track.isSaved)
+//        print("playbackSpeed", playerState.playbackSpeed)
+//        print("playbackOptions.isShuffling", playerState.playbackOptions.isShuffling)
+//        print("playbackOptions.repeatMode", playerState.playbackOptions.repeatMode.hashValue)
+//        print("playbackPosition", playerState.playbackPosition)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -135,28 +138,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func getPlaylist() {
+    func getPlaylist(dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (paging?, String?) -> Void ) {
         if self.sessionManager.session != nil{
             let at = self.sessionManager.session!.accessToken
             let urlPath: String = "https://api.spotify.com/v1/me/playlists"
             guard let up = URL(string: urlPath) else {
+                dispatchQueueForHandler.async {
+                    completionHandler(nil, "Couldn't get URL Object")
+                }
                 return
             }
             var req = URLRequest(url: up)
             req.addValue("Bearer " + at, forHTTPHeaderField: "Authorization")
             let config = URLSessionConfiguration.default
             let ftc = URLSession(configuration: config)
-            let task = ftc.dataTask(with: req){ data, response, error in
-                if error != nil{
-                    print("error=\(error)")
+            let task = ftc.dataTask(with: req) { data, response, error in
+                guard error == nil else{
+                    print("error=\(error!)")
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "Error Calling API")
+                    }
+                    return
                 }
-                else{
-                    print("it works")
-                    print(data!)
+                guard let responseData = data else{
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("no data")
+                    }
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                do {
+                    let parse = try decoder.decode(paging.self, from: responseData)
+                    dispatchQueueForHandler.async {
+                        completionHandler(parse, nil)
+                    }
+                }
+                catch{
+                    
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("error decoding")
+                        print(error)
+                    }
                 }
             }
             task.resume()
-            
         }
+        return
     }
 }
+

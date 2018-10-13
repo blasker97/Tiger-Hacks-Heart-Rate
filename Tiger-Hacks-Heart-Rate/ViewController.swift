@@ -23,7 +23,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func getSongData(_ sender: Any) {
-        appDelegate.getPlaylist()
+        appDelegate.getPlaylist(dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (playlistData, error) in
+            if let error = error {
+                return
+            }
+            guard let playlistData = playlistData else {
+                return
+            }
+            
+            for i in 0..<playlistData.items!.count{
+                print(playlistData.items![i].name!)
+            }
+            
+            
+        })
+        
     }
 }
 
