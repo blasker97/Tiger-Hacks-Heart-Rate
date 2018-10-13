@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct paging: Codable{
+struct Paging: Codable{
     var href: String?
-    var items: [playlistObject]?
+    var items: [PlaylistObject]?
     var limit: Int?
     var next: String?
     var offset: Int?
@@ -18,49 +18,49 @@ struct paging: Codable{
     var total: Int?
 }
 
-struct playlistObject: Codable{
+struct PlaylistObject: Codable{
     var collaborative: Bool?
-    var external_urls: externalURL?
+    var external_urls: ExternalURL?
     var href: String?
     var id: String?
-    var images: [image]?
+    var images: [Image]?
     var name: String?
-    var owner: user?
+    var owner: User?
     var publi: Bool?
     var snapshot_id: String?
-    var tracks: tracks?
+    var tracks: Tracks?
     var type: String?
     var uri: String?
 }
 
-struct externalURL: Codable{
+struct ExternalURL: Codable{
     var key: String?
     var value: String?
 }
 
-struct image: Codable{
+struct Image: Codable{
     var height: Int?
     var url: String?
     var width: Int?
 }
 
-struct user: Codable{
+struct User: Codable{
     var display_name: String?
-    var external_urls: externalURL?
-    var followers: followers?
+    var external_urls: ExternalURL?
+    var followers: Followers?
     var href: String?
     var id: String?
-    var images: [image]?
+    var images: [Image]?
     var type: String?
     var uri: String?
 }
 
-struct followers: Codable{
+struct Followers: Codable{
     var href: String?
     var total: Int?
 }
 
-struct tracks: Codable{
+struct Tracks: Codable{
     var href: String?
     var total: Int?
 }

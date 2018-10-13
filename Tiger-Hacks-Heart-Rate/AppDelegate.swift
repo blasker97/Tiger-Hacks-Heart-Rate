@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func getPlaylist(dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (paging?, String?) -> Void ) {
+    func getPlaylist(dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (Paging?, String?) -> Void ) {
         if self.sessionManager.session != nil{
             let at = self.sessionManager.session!.accessToken
             let urlPath: String = "https://api.spotify.com/v1/me/playlists"
@@ -170,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
                 
                 let decoder = JSONDecoder()
                 do {
-                    let parse = try decoder.decode(paging.self, from: responseData)
+                    let parse = try decoder.decode(Paging.self, from: responseData)
                     dispatchQueueForHandler.async {
                         completionHandler(parse, nil)
                     }
