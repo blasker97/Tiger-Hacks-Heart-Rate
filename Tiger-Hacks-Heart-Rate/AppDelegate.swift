@@ -237,5 +237,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         }
         return
     }
+    
+    func getAnalysis(urlId: String, dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (Float?, String?) -> Void ) {
+        if self.sessionManager.session != nil{
+            let at = self.sessionManager.session!.accessToken
+            let urlPath = "https://api.spotify.com/v1/audio-features/" + urlId
+            guard let up = URL(string: urlPath) else {
+                dispatchQueueForHandler.async {
+                    completionHandler(nil, "Couldn't get URL Object")
+                }
+                return
+            }
+            var req = URLRequest(url: up)
+            req.addValue("Bearer " + at, forHTTPHeaderField: "Authorization")
+            let config = URLSessionConfiguration.default
+            let ftc = URLSession(configuration: config)
+            let task = ftc.dataTask(with: req) { data, response, error in
+                guard error == nil else{
+                    print("error=\(error!)")
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "Error Calling API")
+                    }
+                    return
+                }
+                guard let responseData = data else{
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("no data")
+                    }
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                do {
+                    let parse = try decoder.decode(AudioFeatures.self, from: responseData)
+                    let tempo = parse.tempo
+                    dispatchQueueForHandler.async {
+                        completionHandler(tempo, nil)
+                    }
+                }
+                catch{
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("error decoding")
+                        print(error)
+                    }
+                }
+            }
+            task.resume()
+        }
+        return
+    }
 }
 

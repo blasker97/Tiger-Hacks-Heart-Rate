@@ -29,25 +29,42 @@ class ViewController: UIViewController {
                 return
             }
             guard let playlistData = playlistData else {
+                print("no data")
                 return
             }
-            
-            trackBPM(playlistData.items![0], dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (playlistTrackData, error) in
+            let group = DispatchGroup()
+            group.enter()
+            trackBPM1(playlistData.items![0], dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (playlistTrackData, error) in
                 if let error = error{
                     print(error)
                     return
                 }
-                guard let playlistTrackData = playlistTrackData else{
+                guard var playlistTrackData = playlistTrackData else{
+                    print("no data")
                     return
                 }
                 for i in 0..<playlistTrackData.count{
-                    print(playlistTrackData[i].name + ", " + String(playlistTrackData[i].bpm))
+                    self.appDelegate.getAnalysis(urlId: playlistTrackData[i].id, dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (tempo, error) in
+                        if let error = error {
+                            print(error)
+                            return
+                        }
+                        guard let tempo = tempo else {
+                            print("no data")
+                            return
+                        }
+                        playlistTrackData[i].bpm = tempo
+                        print(tempo)
+                    })
                 }
-                
+                group.leave()
+                group.notify(queue: .main){
+                    for i in 0..<playlistTrackData.count{
+                        print(playlistTrackData[i].name + ", " + String(playlistTrackData[i].bpm))
+                    }
+                }
             })
-            
         })
-        
     }
 }
 

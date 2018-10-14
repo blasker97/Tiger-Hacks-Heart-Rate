@@ -152,6 +152,7 @@ struct TrackLink: Codable {
 struct TrackDataBPM {
     var name: String
     var bpm: Float
+    var id: String
 }
 
 struct AudioFeatures: Codable{

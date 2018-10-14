@@ -8,7 +8,7 @@
 
 import Foundation
 
-func trackBPM(_ playlist : PlaylistObject, dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping ([TrackDataBPM]?, String?) -> Void){
+func trackBPM1(_ playlist : PlaylistObject, dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping ([TrackDataBPM]?, String?) -> Void){
         guard let tracks = playlist.tracks else{
             dispatchQueueForHandler.async {
                 completionHandler(nil, "Couldn't get tracks")
@@ -48,8 +48,9 @@ func trackBPM(_ playlist : PlaylistObject, dispatchQueueForHandler:DispatchQueue
                     for i in 0..<items.count{
                         if let t = items[i].track {
                             if let name = t.name{
-                                
-                                playlistTrackData.append(TrackDataBPM(name: name, bpm: 0))
+                                if let id = t.id{
+                                    playlistTrackData.append(TrackDataBPM(name: name, bpm: 0, id: id))
+                                }
                             }
                         }
                     }
@@ -66,3 +67,4 @@ func trackBPM(_ playlist : PlaylistObject, dispatchQueueForHandler:DispatchQueue
         })
         return
 }
+
