@@ -32,10 +32,19 @@ class ViewController: UIViewController {
                 return
             }
             
-            for i in 0..<playlistData.items!.count{
-                print(playlistData.items![i].name!)
-            }
-            
+            trackBPM(playlistData.items![0], dispatchQueueForHandler: DispatchQueue.main, completionHandler: { (playlistTrackData, error) in
+                if let error = error{
+                    print(error)
+                    return
+                }
+                guard let playlistTrackData = playlistTrackData else{
+                    return
+                }
+                for i in 0..<playlistTrackData.count{
+                    print(playlistTrackData[i].name + ", " + String(playlistTrackData[i].bpm))
+                }
+                
+            })
             
         })
         

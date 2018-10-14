@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     let SpotifyClientID = "45498c6f848a4c12ae3281851abf67af"
     let SpotifyRedirectURL = URL(string: "spotify-Tiger-Hacks-Heart-Rate://spotify-login-callback")!
     
-    var pagingobject: Paging?
+    var pagingobject: PagingPlaylist?
     
     
     lazy var configuration = SPTConfiguration(
@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
             let tokenRefreshURL = URL(string: "https://tiger-hacks-heart-rate.herokuapp.com/api/refresh_token") {
             self.configuration.tokenSwapURL = tokenSwapURL
             self.configuration.tokenRefreshURL = tokenRefreshURL
-            self.configuration.playURI = ""
         }
         let manager = SPTSessionManager(configuration: self.configuration, delegate: self)
         return manager
@@ -138,7 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func getPlaylist(dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (Paging?, String?) -> Void ) {
+    func getPlaylist(dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (PagingPlaylist?, String?) -> Void ) {
         if self.sessionManager.session != nil{
             let at = self.sessionManager.session!.accessToken
             let urlPath: String = "https://api.spotify.com/v1/me/playlists"
@@ -170,13 +169,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
                 
                 let decoder = JSONDecoder()
                 do {
-                    let parse = try decoder.decode(Paging.self, from: responseData)
+                    let parse = try decoder.decode(PagingPlaylist.self, from: responseData)
                     dispatchQueueForHandler.async {
                         completionHandler(parse, nil)
                     }
                 }
                 catch{
                     
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("error decoding")
+                        print(error)
+                    }
+                }
+            }
+            task.resume()
+        }
+        return
+    }
+    
+    func getTracks(urlString: String, dispatchQueueForHandler:DispatchQueue, completionHandler: @escaping (PagingTracks?, String?) -> Void ) {
+        if self.sessionManager.session != nil{
+            let at = self.sessionManager.session!.accessToken
+            let urlPath = urlString
+            guard let up = URL(string: urlPath) else {
+                dispatchQueueForHandler.async {
+                    completionHandler(nil, "Couldn't get URL Object")
+                }
+                return
+            }
+            var req = URLRequest(url: up)
+            req.addValue("Bearer " + at, forHTTPHeaderField: "Authorization")
+            let config = URLSessionConfiguration.default
+            let ftc = URLSession(configuration: config)
+            let task = ftc.dataTask(with: req) { data, response, error in
+                guard error == nil else{
+                    print("error=\(error!)")
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "Error Calling API")
+                    }
+                    return
+                }
+                guard let responseData = data else{
+                    dispatchQueueForHandler.async {
+                        completionHandler(nil, "No data")
+                        print("no data")
+                    }
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                do {
+                    let parse = try decoder.decode(PagingTracks.self, from: responseData)
+                    dispatchQueueForHandler.async {
+                        completionHandler(parse, nil)
+                    }
+                }
+                catch{
                     dispatchQueueForHandler.async {
                         completionHandler(nil, "No data")
                         print("error decoding")
