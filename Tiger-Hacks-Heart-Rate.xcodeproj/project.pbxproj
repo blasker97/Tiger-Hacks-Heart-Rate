@@ -15,7 +15,7 @@
 		4E6BDDBF217251C800FEB7DE /* Tiger_Hacks_Heart_RateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BDDBE217251C800FEB7DE /* Tiger_Hacks_Heart_RateTests.swift */; };
 		4E6BDDCA217251C800FEB7DE /* Tiger_Hacks_Heart_RateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BDDC9217251C800FEB7DE /* Tiger_Hacks_Heart_RateUITests.swift */; };
 		4E6BDDE12172575700FEB7DE /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6BDDE02172575700FEB7DE /* SpotifyiOS.framework */; };
-		4EC5E30121729E8B005E5538 /* TrackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5E30021729E8B005E5538 /* TrackData.swift */; };
+		5655B9862189226F00CD2789 /* GetPlaylistBPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5655B9852189226F00CD2789 /* GetPlaylistBPM.swift */; };
 		61415303217282DE002CB8CC /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61415302217282DE002CB8CC /* Playlist.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,7 @@
 		4E6BDDCB217251C800FEB7DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E6BDDD9217253BF00FEB7DE /* Tiger-Hacks-Heart-Rate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tiger-Hacks-Heart-Rate-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E6BDDE02172575700FEB7DE /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
-		4EC5E30021729E8B005E5538 /* TrackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackData.swift; sourceTree = "<group>"; };
+		5655B9852189226F00CD2789 /* GetPlaylistBPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaylistBPM.swift; sourceTree = "<group>"; };
 		61415302217282DE002CB8CC /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +114,7 @@
 				4E6BDDB5217251C800FEB7DE /* Info.plist */,
 				4E6BDDD9217253BF00FEB7DE /* Tiger-Hacks-Heart-Rate-Bridging-Header.h */,
 				61415302217282DE002CB8CC /* Playlist.swift */,
-				4EC5E30021729E8B005E5538 /* TrackData.swift */,
+				5655B9852189226F00CD2789 /* GetPlaylistBPM.swift */,
 			);
 			path = "Tiger-Hacks-Heart-Rate";
 			sourceTree = "<group>";
@@ -269,7 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E6BDDAC217251C700FEB7DE /* ViewController.swift in Sources */,
-				4EC5E30121729E8B005E5538 /* TrackData.swift in Sources */,
+				5655B9862189226F00CD2789 /* GetPlaylistBPM.swift in Sources */,
 				4E6BDDAA217251C700FEB7DE /* AppDelegate.swift in Sources */,
 				61415303217282DE002CB8CC /* Playlist.swift in Sources */,
 			);
